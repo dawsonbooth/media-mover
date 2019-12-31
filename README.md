@@ -1,2 +1,4 @@
 # media-mover
-Search through all matching files on computer and move to an external drive
+Copy all files with given extension between any two folders on a given computer.
+
+Works with Windows/Mac/Linux
