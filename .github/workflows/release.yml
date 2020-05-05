@@ -2,8 +2,6 @@ name: Release
 
 on: [push]
 
-name: Release
-
 jobs:
   Linux:
     runs-on: ubuntu-latest
