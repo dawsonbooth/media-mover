@@ -22,7 +22,7 @@ jobs:
         id: release
         run: |
           make build
-          echo ::set-output name=filename::${ls dist}
+          echo ::set-output name=filename::$(ls dist)
         shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
@@ -49,7 +49,7 @@ jobs:
         id: release
         run: |
           make build
-          echo ::set-output name=filename::${ls dist}
+          echo ::set-output name=filename::$(ls dist)
         shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
@@ -76,7 +76,7 @@ jobs:
         id: release
         run: |
           make build
-          echo ::set-output name=filename::${ls dist}
+          echo ::set-output name=filename::$(ls dist)
         shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
