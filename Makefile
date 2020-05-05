@@ -13,7 +13,9 @@ else
 	endif
 endif
 
-BUILDFLAGS = --onefile --name media-mover-$(VERSION)-$(PLATFORM) #--windowed
+FILENAME = media-mover-$(VERSION)-$(PLATFORM)
+
+BUILDFLAGS = --onefile --name $(FILENAME) #--windowed
 
 all: list
 
@@ -28,6 +30,7 @@ clean:
 	rm -f *.spec
 
 build:
-	pyinstaller $(BUILDFLAGS) media-mover.py
+	@pyinstaller $(BUILDFLAGS) media-mover.py
+	@echo FILENAME
 	
 
