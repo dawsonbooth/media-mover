@@ -26,7 +26,7 @@ HOME_DIRECTORY = Path("/")
 extensions = {
     "image": ["png", "jpg", "jpeg"],
     "video":  ["avi", "mpg", "mpeg", "mov", "m4v"],
-    "music": ["mp3", "wav"]
+    "music": ["mp3", "wav", "m4a"]
 }
 
 if __name__ == "__main__":
