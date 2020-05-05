@@ -6,7 +6,7 @@ authors = ["dawsonbooth <github@dawsonbooth.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.5"
+python = "^3.7"
 tqdm = "^4.46.0"
 
 [tool.poetry.dev-dependencies]
