@@ -76,6 +76,7 @@ jobs:
         id: release
         run: |
           make build
+          ls build
           echo ::set-output name=filename::$(ls dist)
         shell: bash
       - name: Upload release file
