@@ -24,7 +24,6 @@ jobs:
           make build
           echo ::set-output name=filename::$(ls dist)
         shell: bash
-        shell: pwsh
       - name: Upload release file
         uses: actions/upload-artifact@v1
         with:
