@@ -26,11 +26,8 @@ list:
 		}' | grep -v '__\$$' | grep -v 'make\[1\]' | grep -v 'Makefile' | sort"
 
 clean:
-	rm -rf build/ dist/
+	rm -rf build/ dist/ __pycache__/
 	rm -f *.spec
 
 build:
-	@poetry run pyinstaller $(BUILDFLAGS) media-mover.py
-	@echo FILENAME
-	
-
+	@poetry run pyinstaller $(BUILDFLAGS) media-mover.py	
