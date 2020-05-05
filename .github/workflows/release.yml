@@ -107,17 +107,17 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: media-mover-${{ steps.version.outputs.version }}-linux
-          path: dist/media-mover-${{ steps.version.outputs.version }}-linux
+          path: ./dist/media-mover-${{ steps.version.outputs.version }}-linux
       - name: Download MacOS release file
         uses: actions/download-artifact@master
         with:
           name: media-mover-${{ steps.version.outputs.version }}-darwin
-          path: dist/media-mover-${{ steps.version.outputs.version }}-darwin
+          path: ./dist/media-mover-${{ steps.version.outputs.version }}-darwin
       - name: Download Windows release file
         uses: actions/download-artifact@master
         with:
           name: media-mover-${{ steps.version.outputs.version }}-win32.exe
-          path: dist/media-mover-${{ steps.version.outputs.version }}-win32.exe
+          path: ./dist/media-mover-${{ steps.version.outputs.version }}-win32.exe
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
