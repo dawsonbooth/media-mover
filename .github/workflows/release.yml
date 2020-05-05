@@ -2,12 +2,15 @@ name: Release
 
 on: [push]
 
+name: Release
+
 jobs:
   Linux:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Set up Python 3.5
         uses: actions/setup-python@v1
         with:
@@ -18,21 +21,23 @@ jobs:
           pip install poetry
           poetry install
       - name: Building release
+        id: release
         run: |
           make build
-          echo "::set-env name=FILENAME::$(ls dist)"
+          echo "::set-output name=filename::$(ls dist)"
         shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
         with:
-          name: ${{env.FILENAME}}
-          path: dist/${{env.FILENAME}}
+          name: ${{ steps.release.outputs.filename }}
+          path: dist/${{ steps.release.outputs.filename }}
 
   MacOS:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Set up Python 3.5
         uses: actions/setup-python@v1
         with:
@@ -43,21 +48,23 @@ jobs:
           pip install poetry
           poetry install
       - name: Building release
+        id: release
         run: |
           make build
-          echo "::set-env name=FILENAME::$(ls dist)"
+          echo "::set-output name=filename::$(ls dist)"
         shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
         with:
-          name: ${{env.FILENAME}}
-          path: dist/${{env.FILENAME}}
+          name: ${{ steps.release.outputs.filename }}
+          path: dist/${{ steps.release.outputs.filename }}
 
   Windows:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Set up Python 3.5
         uses: actions/setup-python@v1
         with:
@@ -68,12 +75,13 @@ jobs:
           pip install poetry
           poetry install
       - name: Building release
+        id: release
         run: |
           make build
-          echo "::set-env name=FILENAME::$(ls dist)"
+          echo "::set-output name=filename::$(ls dist)"
         shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
         with:
-          name: ${{env.FILENAME}}
-          path: dist/${{env.FILENAME}}
+          name: ${{ steps.release.outputs.filename }}
+          path: dist/${{ steps.release.outputs.filename }}
