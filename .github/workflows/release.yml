@@ -20,7 +20,8 @@ jobs:
           args: install
       - name: Building release
         run: |
-          echo "::set-env name=FILENAME::$(make build)"
+          make build
+          echo "::set-env name=FILENAME::$(ls dist)"
         shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
@@ -45,7 +46,8 @@ jobs:
           args: install
       - name: Building release
         run: |
-          echo "::set-env name=FILENAME::$(make build)"
+          make build
+          echo "::set-env name=FILENAME::$(ls dist)"
         shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
@@ -70,7 +72,8 @@ jobs:
           args: install
       - name: Building release
         run: |
-          echo "::set-env name=FILENAME::$(make build)"
+          make build
+          echo "::set-env name=FILENAME::$(ls dist)"
         shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
