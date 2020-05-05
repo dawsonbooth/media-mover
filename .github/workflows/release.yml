@@ -1,0 +1,79 @@
+name: Release
+
+on: [push]
+
+jobs:
+  Linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.5
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.5
+      - name: Set up Poetry
+        uses: abatilo/actions-poetry@v1.5.0
+        with:
+          python_version: 3.5
+          poetry_version: 1.0.3
+          args: install
+      - name: Building release
+        run: |
+          echo "::set-env name=FILENAME::$(make build)"
+        shell: bash
+      - name: Upload release file
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{env.FILENAME}}
+          path: dist/${{env.FILENAME}}
+
+  MacOS:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.5
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.5
+      - name: Set up Poetry
+        uses: abatilo/actions-poetry@v1.5.0
+        with:
+          python_version: 3.5
+          poetry_version: 1.0.3
+          args: install
+      - name: Building release
+        run: |
+          echo "::set-env name=FILENAME::$(make build)"
+        shell: bash
+      - name: Upload release file
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{env.FILENAME}}
+          path: dist/${{env.FILENAME}}
+
+  Windows:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.5
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.5
+      - name: Set up Poetry
+        uses: abatilo/actions-poetry@v1.5.0
+        with:
+          python_version: 3.5
+          poetry_version: 1.0.3
+          args: install
+      - name: Building release
+        run: |
+          echo "::set-env name=FILENAME::$(make build)"
+        shell: bash
+      - name: Upload release file
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{env.FILENAME}}
+          path: dist/${{env.FILENAME}}
