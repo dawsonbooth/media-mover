@@ -13,7 +13,7 @@ jobs:
         with:
           python-version: 3.5
       - name: Set up Poetry
-        uses: abatilo/actions-poetry@v1.5.0
+        uses: abatilo/actions-poetry@v1.0.0
         with:
           python_version: 3.5
           poetry_version: 1.0.3
@@ -38,7 +38,7 @@ jobs:
         with:
           python-version: 3.5
       - name: Set up Poetry
-        uses: abatilo/actions-poetry@v1.5.0
+        uses: abatilo/actions-poetry@v1.0.0
         with:
           python_version: 3.5
           poetry_version: 1.0.3
@@ -63,7 +63,7 @@ jobs:
         with:
           python-version: 3.5
       - name: Set up Poetry
-        uses: abatilo/actions-poetry@v1.5.0
+        uses: abatilo/actions-poetry@v1.0.0
         with:
           python_version: 3.5
           poetry_version: 1.0.3
