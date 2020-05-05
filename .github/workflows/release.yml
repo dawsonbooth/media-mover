@@ -78,7 +78,6 @@ jobs:
           make build
           echo ::set-output name=filename::$((Get-ChildItem -Directory dist | Select-Object -First 1).Name)
         shell: pwsh
-        shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
         with:
