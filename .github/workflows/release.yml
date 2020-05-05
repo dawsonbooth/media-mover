@@ -23,28 +23,12 @@ jobs:
         run: |
           make build
           echo "::set-output name=filename::$(ls dist)"
-          echo "::set-output name=version::$(make version)"
         shell: bash
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload release file
+        uses: actions/upload-artifact@v1
         with:
-          tag_name: ${{ steps.build.outputs.version }}
-          release_name: Version ${{ steps.build.outputs.version }}
-          draft: false
-          prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/${{ steps.build.outputs.filename }}
-          asset_name: ${{ steps.build.outputs.filename }}
-          asset_content_type: application/octet-stream
+          name: ${{ steps.build.outputs.filename }}
+          path: dist/${{ steps.build.outputs.filename }}
 
   MacOS:
     runs-on: macos-latest
@@ -66,28 +50,12 @@ jobs:
         run: |
           make build
           echo "::set-output name=filename::$(ls dist)"
-          echo "::set-output name=version::$(make version)"
         shell: bash
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload release file
+        uses: actions/upload-artifact@v1
         with:
-          tag_name: ${{ steps.build.outputs.version }}
-          release_name: Version ${{ steps.build.outputs.version }}
-          draft: false
-          prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/${{ steps.build.outputs.filename }}
-          asset_name: ${{ steps.build.outputs.filename }}
-          asset_content_type: application/octet-stream
+          name: ${{ steps.build.outputs.filename }}
+          path: dist/${{ steps.build.outputs.filename }}
 
   Windows:
     runs-on: windows-latest
@@ -109,25 +77,69 @@ jobs:
         run: |
           make build
           echo "::set-output name=filename::$((Get-ChildItem -Path "./dist" | Select-Object -First 1).Name)"
-          echo "::set-output name=version::$(make version)"
         shell: pwsh
+      - name: Upload release file
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ steps.build.outputs.filename }}
+          path: dist/${{ steps.build.outputs.filename }}
+
+  Release:
+    needs: [Linux, MacOS, Windows]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Download Linux release file
+        uses: actions/download-artifact@master
+        with:
+          name: media-mover-$(make version)-linux
+          path: dist/media-mover-$(make version)-linux
+      - name: Download MacOS release file
+        uses: actions/download-artifact@master
+        with:
+          name: media-mover-$(make version)-darwin
+          path: dist/media-mover-$(make version)-darwin
+      - name: Download Windows release file
+        uses: actions/download-artifact@master
+        with:
+          name: media-mover-$(make version)-win32.exe
+          path: dist/media-mover-$(make version)-win32.exe
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.build.outputs.version }}
-          release_name: Version ${{ steps.build.outputs.version }}
+          tag_name: v$(make version)
+          release_name: v$(make version)
           draft: false
           prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
+      - name: Upload Linux release file asset
+        uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/${{ steps.build.outputs.filename }}
-          asset_name: ${{ steps.build.outputs.filename }}
+          asset_path: dist/media-mover-$(make version)-linux
+          asset_name: media-mover-$(make version)-linux
+          asset_content_type: application/octet-stream
+      - name: Upload MacOS release file asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/media-mover-$(make version)-darwin
+          asset_name: media-mover-$(make version)-darwin
+          asset_content_type: application/octet-stream
+      - name: Upload Windows release file asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/media-mover-$(make version)-win32.exe
+          asset_name: media-mover-$(make version)-win32.exe
           asset_content_type: application/octet-stream
