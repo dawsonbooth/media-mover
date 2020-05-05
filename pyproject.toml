@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "media-mover"
-version = "1.0.0-test1"
+version = "1.0.0-test2"
 description = "Search through all matching files on computer and move to an external drive"
 authors = ["dawsonbooth <github@dawsonbooth.com>"]
 license = "MIT"
