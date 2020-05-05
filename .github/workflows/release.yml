@@ -24,6 +24,7 @@ jobs:
           make build
           echo ::set-output name=filename::$(ls dist)
         shell: bash
+        shell: pwsh
       - name: Upload release file
         uses: actions/upload-artifact@v1
         with:
@@ -76,8 +77,8 @@ jobs:
         id: release
         run: |
           make build
-          ls build
-          echo ::set-output name=filename::$(ls dist)
+          echo ::set-output name=filename::$((Get-ChildItem -Directory dist | Select-Object -First 1).Name)
+        shell: pwsh
         shell: bash
       - name: Upload release file
         uses: actions/upload-artifact@v1
