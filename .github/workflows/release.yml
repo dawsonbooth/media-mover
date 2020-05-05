@@ -134,7 +134,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/media-mover-${{ steps.version.outputs.version }}-linux
+          asset_path: ./dist/media-mover-${{ steps.version.outputs.version }}-linux/media-mover-${{ steps.version.outputs.version }}-linux
           asset_name: media-mover-${{ steps.version.outputs.version }}-linux
           asset_content_type: application/octet-stream
       - name: Upload MacOS release file asset
@@ -143,7 +143,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/media-mover-${{ steps.version.outputs.version }}-darwin
+          asset_path: ./dist/media-mover-${{ steps.version.outputs.version }}-darwin/media-mover-${{ steps.version.outputs.version }}-darwin
           asset_name: media-mover-${{ steps.version.outputs.version }}-darwin
           asset_content_type: application/octet-stream
       - name: Upload Windows release file asset
@@ -152,6 +152,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/media-mover-${{ steps.version.outputs.version }}-win32.exe
+          asset_path: ./dist/media-mover-${{ steps.version.outputs.version }}-win32.exe/media-mover-${{ steps.version.outputs.version }}-win32.exe
           asset_name: media-mover-${{ steps.version.outputs.version }}-win32.exe
           asset_content_type: application/octet-stream
