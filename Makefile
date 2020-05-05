@@ -32,3 +32,6 @@ clean:
 build:
 	@pip install pyinstaller
 	@pyinstaller $(BUILDFLAGS) media-mover.py	
+
+version:
+	@echo $(VERSION)
