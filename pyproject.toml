@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-tqdm = "^4.46.0"
+pysimplegui = "^4.19.0"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.5.0"

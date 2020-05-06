@@ -1,3 +1,5 @@
+SOURCE = src/main.py
+
 VERSION := $(shell poetry version | grep -oE '[^ ]+$$')
 
 PLATFORM :=
@@ -15,7 +17,7 @@ endif
 
 FILENAME = media-mover-$(VERSION)-$(PLATFORM)
 
-BUILDFLAGS = --onefile --name $(FILENAME) #--windowed
+BUILDFLAGS = --onefile --name $(FILENAME) --windowed
 
 all: list
 
@@ -26,11 +28,11 @@ list:
 		}' | grep -v '__\$$' | grep -v 'make\[1\]' | grep -v 'Makefile' | sort"
 
 clean:
-	rm -rf build/ dist/ __pycache__/
+	rm -rf build/ dist/ src/__pycache__/
 	rm -f *.spec
 
 build:
-	@poetry run pyinstaller $(BUILDFLAGS) media-mover.py	
+	@poetry run pyinstaller $(BUILDFLAGS) $(SOURCE)
 
 version:
 	@echo $(VERSION)
