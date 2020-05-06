@@ -29,8 +29,6 @@ extensions = {
     "music": ["mp3", "wav", "m4a"]
 }
 
-# FIXME: Test release with same version
-
 if __name__ == "__main__":
     for media in tqdm(extensions.keys(), desc="Total progress"):
         for ext in tqdm(extensions[media], desc=media.capitalize() + " progress"):
