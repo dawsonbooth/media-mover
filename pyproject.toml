@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "media-mover"
-version = "1.0.0-test9"
+version = "1.0.0-test10"
 description = "Search through all matching files on computer and move to an external drive"
 authors = ["dawsonbooth <github@dawsonbooth.com>"]
 license = "MIT"
@@ -12,6 +12,11 @@ tqdm = "^4.46.0"
 [tool.poetry.dev-dependencies]
 pylint = "^2.5.0"
 autopep8 = "^1.5.2"
+pyinstaller = "^3.6"
+
+macholib = { version = "^1.8", markers = "sys_platform == 'darwin'" }
+pefile = { version = "^2017.8.1", markers = "sys_platform == 'win32'" }
+pywin32-ctypes = { version = "^0.2.0", markers = "sys_platform == 'win32'" }
 
 [build-system]
 requires = ["poetry>=0.12"]

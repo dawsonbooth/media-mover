@@ -30,8 +30,7 @@ clean:
 	rm -f *.spec
 
 build:
-	@pip install pyinstaller
-	@pyinstaller $(BUILDFLAGS) media-mover.py	
+	@poetry run pyinstaller $(BUILDFLAGS) media-mover.py	
 
 version:
 	@echo $(VERSION)
