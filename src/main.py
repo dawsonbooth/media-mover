@@ -25,9 +25,9 @@ while True:
     if event in (None, 'Cancel'):  # if user closes window or clicks cancel
         break
     elif event in ('Start') and not moving_media:
-        num_files = 1000000  # count_files(values['source_text'])
+        num_files = count_files(values['source_text'])
         for n in copy_files(values['source_text'], values['dest_text'], CATEGORIES):
-            if not sg.OneLineProgressMeter('Total Progress', n, num_files, 'progress'):
+            if not sg.OneLineProgressMeter('Total Progress', n, num_files, 'progress', orientation='h'):
                 break
 
 window.close()
