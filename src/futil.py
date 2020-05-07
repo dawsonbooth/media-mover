@@ -4,23 +4,6 @@ from pathlib import Path
 import logging
 
 
-class Log:
-    def __init__(self, window, key):
-        self.window = window
-        self.key = key
-
-    def write(self, s):
-        self.window[self.key].print(s, end='')
-
-
-HOME_DIRECTORY = Path("~").expanduser()
-CATEGORIES = {
-    "image": ["png", "jpg", "jpeg"],
-    "video":  ["avi", "mpg", "mpeg", "mov", "m4v"],
-    "music": ["mp3", "wav", "m4a"]
-}
-
-
 def all_files(directory, ignore_paths=[]):
     for dirpath, dirnames, filenames in os.walk(directory, topdown=True):
         for d in range(len(dirnames) - 1, -1, -1):
@@ -40,9 +23,9 @@ def copy_files(source_dir, dest_dir, categories):
     source_dir = Path(source_dir).expanduser().resolve()
     dest_dir = Path(dest_dir).expanduser().resolve()
 
-    n = 0
+    progress = 0
     for dirpath, dirnames, filenames in all_files(source_dir, ignore_paths=[dest_dir]):
-        for name in filenames:
+        for n, name in enumerate(filenames):
             for media in categories.keys():
                 if any(name.endswith(ext) for ext in categories[media]):
                     source = Path(dirpath).joinpath(name)
@@ -60,5 +43,5 @@ def copy_files(source_dir, dest_dir, categories):
                     shutil.copy(source, dest)
                     logging.info(f"Copied '{name}' to '{media}'")
 
-        yield n
-        n += len(filenames)
+            progress += n
+            yield progress

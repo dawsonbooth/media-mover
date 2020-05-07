@@ -1,64 +1,49 @@
 import logging
+from copy import deepcopy
 
 import PySimpleGUI as sg
 
-import utils
+import futil
+from gui import Stage, window
+from settings import CATEGORIES
 
-sg.theme('DarkBlue12')
-
-source_input = [
-    sg.Text('Source Folder'),
-    sg.InputText(utils.HOME_DIRECTORY, key='source_text'),
-    sg.FolderBrowse('Browse', key='source_browse')
-]
-dest_input = [
-    sg.Text('Destination Folder'),
-    sg.InputText('', key='dest_text'),
-    sg.FolderBrowse('Browse', key='dest_browse')
-]
-folder_section = [
-    [sg.Text('Choose Source and Destination Folders')],
-    [*source_input],
-    [*dest_input],
-]
-
-output = sg.Multiline('', key='output', size=(80, 10)),
-
-buttons = sg.Button('Cancel'), sg.Button('Start')
-
-layout = [
-    *folder_section,
-    [*output],
-    [*buttons],
-]
-
-
-window = sg.Window('Media Mover', layout, element_justification='center')
-
-log = utils.Log(window, 'output')
-
-root = logging.getLogger()
-root.setLevel(logging.DEBUG)
-
-handler = logging.StreamHandler(log)
-handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter(
-    '[%(levelname)s] %(message)s')
-handler.setFormatter(formatter)
-root.addHandler(handler)
-
-moving_media = False
+categories = deepcopy(CATEGORIES)
+stage = Stage.WAIT
 while True:
-    event, values = window.read()
 
-    if event in (None, 'Cancel'):
-        break
-    elif event in ('Start') and not moving_media:
+    if stage == Stage.WAIT:
+        event, values = window.read()
+
+        if event.startswith('ext_'):
+            ext = event[4:]
+            media = None
+            for k, v in CATEGORIES.items():
+                if ext in v:
+                    media = k
+                    break
+            if values[event]:
+                categories[media].append(ext)
+            else:
+                categories[media].remove(ext)
+        elif event == 'Start':
+            stage = Stage.COUNT
+            logging.info('Counting files...')
+            logging.warning('Window may block!')
+        elif event in (None, 'Cancel'):
+            break
+
+    elif stage == Stage.COUNT:
+        num_files = futil.count_files(values['source_text'])
+        logging.info('Finished counting.')
+        stage = Stage.MOVE
+
+    elif stage == Stage.MOVE:
         logging.info('Starting...')
-        num_files = utils.count_files(values['source_text'])
-        for n in utils.copy_files(values['source_text'], values['dest_text'], utils.CATEGORIES):
+        for n in futil.copy_files(values['source_text'], values['dest_text'], categories):
             if not sg.OneLineProgressMeter('Total Progress', n, num_files, 'progress', orientation='h'):
                 break
+        sg.OneLineProgressMeterCancel('progress')
         logging.info('Finished!')
+        stage = Stage.WAIT
 
 window.close()

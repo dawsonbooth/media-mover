@@ -1,2 +1,3 @@
-- [ ] Extension checkboxes
+- [x] Extension checkboxes
 - [x] Console preview
+- [x] Indicate counting files
