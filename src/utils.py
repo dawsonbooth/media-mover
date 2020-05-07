@@ -1,6 +1,17 @@
 import os
 import shutil
 from pathlib import Path
+import logging
+
+
+class Log:
+    def __init__(self, window, key):
+        self.window = window
+        self.key = key
+
+    def write(self, s):
+        self.window[self.key].print(s, end='')
+
 
 HOME_DIRECTORY = Path("~").expanduser()
 CATEGORIES = {
@@ -47,6 +58,7 @@ def copy_files(source_dir, dest_dir, categories):
                     dest = dest_parent.joinpath(source.name)
 
                     shutil.copy(source, dest)
+                    logging.info(f"Copied '{name}' to '{media}'")
 
         yield n
         n += len(filenames)
