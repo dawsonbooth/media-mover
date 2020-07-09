@@ -8,6 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.7"
 pysimplegui = "^4.19.0"
+rope = "^0.17.0"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.5.0"
