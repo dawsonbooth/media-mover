@@ -34,5 +34,9 @@ clean:
 build:
 	@poetry run pyinstaller $(BUILDFLAGS) $(SOURCE)
 
+release:
+	git tag v$(VERSION)
+	git push origin v$(VERSION)
+
 version:
 	@echo $(VERSION)
